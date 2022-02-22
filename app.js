@@ -5,8 +5,10 @@ import __dirname  from './dirname.js';
 import cookieParser  from 'cookie-parser';
 import cors  from 'cors';
 import logger  from 'morgan';
+import connectDB from './db/connection.js';
 
-import usersRouter  from './routes/users.js';
+import usersRouter  from './routes/usersRouter.js';
+connectDB()
 
 const app = express();
 
