@@ -45,3 +45,12 @@ export const createComment = async (req, res) => {
     res.status(201).json(newComment);
 };
 
+// UPDATE COMMENT 
+export const updateComment = async (req, res) => {
+    const commentId = String(req.body.comment_id);
+    const commentText = req.body.text;
+    const updatedComment = {"text": commentText};
+    await comment.findByIdAndUpdate(commentId, updatedComment);
+    const returnedUpdatedComment = await comment.findById(commentId);
+    res.send({"message":"message successfully updated", returnedUpdatedComment});
+}
