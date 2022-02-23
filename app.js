@@ -8,6 +8,7 @@ import logger  from 'morgan';
 import connectDB from './db/connection.js';
 
 import usersRouter  from './routes/usersRouter.js';
+import commentRouter from "./routes/commentRouter.js";
 connectDB()
 
 const app = express();
@@ -20,7 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/users', usersRouter);
-
+app.use('/comments', commentRouter);
 app.use(function (req, res, next) {
   res.status(404).json({message: "We couldn't find what you were looking for 😞"})
 })
