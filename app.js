@@ -6,6 +6,8 @@ import cookieParser  from 'cookie-parser';
 import cors  from 'cors';
 import logger  from 'morgan';
 import connectDB from './db/connection.js';
+import dotenv from 'dotenv'
+dotenv.config()
 
 import usersRouter  from './routes/usersRouter.js';
 connectDB()
