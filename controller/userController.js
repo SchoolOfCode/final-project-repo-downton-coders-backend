@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler'
 import user  from '../models/usersModel.js'
 
 
- export const getUsers = asyncHandler( async (req, res) =>{
+ export const getAllUsers = asyncHandler( async (req, res) =>{
      const User = await user.find()
     res.status(200).json(User)
 })
@@ -97,7 +97,15 @@ export const loginUser = asyncHandler(async(req, res) => {
 
 })
 
-// export const getUsers = asyncHandler(async() =>{
+export const getUser = asyncHandler(async(req, res) =>{
+  const {_id, name, surname, username, email} = await user.findById(req.User.id)
+  res.status(200).json({
+    id: _id,
+    name,
+    surname,
+    username,
+    email
+  })
   
-// })
+})
 

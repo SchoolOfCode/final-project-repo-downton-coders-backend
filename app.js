@@ -8,6 +8,7 @@ import logger  from 'morgan';
 import connectDB from './db/connection.js';
 import dotenv from 'dotenv'
 dotenv.config()
+import errorHandler from './middlewares/errorHandler.js';
 
 import usersRouter  from './routes/usersRouter.js';
 connectDB()
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use('/users', usersRouter);
 
+app.use(errorHandler)
 app.use(function (req, res, next) {
   res.status(404).json({message: "We couldn't find what you were looking for 😞"})
 })
