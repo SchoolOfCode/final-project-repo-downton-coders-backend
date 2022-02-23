@@ -22,13 +22,15 @@ export const getCommentsByUserId = async (req, res) => {
 // CREATE COMMENTS
 
 export const createComment = async (req, res) => {
-    const author_id = await req.body._id;
-    const body = await req.body.text;
+    console.log(req.body)
+    const author_id =  req.body.author_id;
+    const body =  req.body.text;
+    console.log(author_id, body)
     const newComment = await comment.create({
       "author_id": author_id,
-      "body": body,
+      "text": body,
     })
     res.send({"newComment": newComment});
-    res.status(201).json({message: 'Comment created.'})
+    // res.status(201).json({message: 'Comment created.'})
 };
 
