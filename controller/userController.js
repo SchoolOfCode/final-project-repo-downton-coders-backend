@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import user  from '../models/usersModel.js'
 
@@ -66,7 +67,8 @@ export const registerUser  = (async(req, res) => {
       surname: User.surname,
       username: User.username,
       email: User.email,
-      password: hashedPassword
+      password: hashedPassword,
+      token: generateToken(User._id)
     })
   }else{
     res.status(400)
@@ -87,6 +89,7 @@ export const loginUser = asyncHandler(async(req, res) => {
       surname: User.surname,
       username: User.username,
       email: User.email,
+      token: generateToken(User._id)
       
     
     })
@@ -108,4 +111,10 @@ export const getUser = asyncHandler(async(req, res) =>{
   })
   
 })
+
+//generate jwt token
+const generateToken = (id) => {
+  return jwt.sign({id}, process.env.JWT_SECRET_TOKEN, {expiresIn: '30d'})
+}
+
 
