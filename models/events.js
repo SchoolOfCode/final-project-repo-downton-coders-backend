@@ -11,7 +11,7 @@ const eventSchema = new mongoose.Schema({
   image: String,
   categories: [String],
   price: Number,
-  external_event: String,
+  external_event: String, 
 });
 
 const event = mongoose.model("Event", eventSchema);

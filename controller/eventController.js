@@ -1,7 +1,7 @@
 import event from "../models/events.js";
 
 export const getEvents = async (req, res) => {
-  const Event = await event.find();
+  const Event = await event.find({User: req.user._id});
   res.status(200).json(Event);
 };
 
