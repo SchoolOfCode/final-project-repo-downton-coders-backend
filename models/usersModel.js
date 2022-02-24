@@ -11,8 +11,16 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     email: String,
-    friend: mongoose.SchemaTypes.ObjectId,
-    hobbies: [String]
+    password:{
+        type: String,
+        required: true,
+    },
+    hobbies: [String],
+
+    
+    
+}, {
+    timestamps: true,
 })
 
 
