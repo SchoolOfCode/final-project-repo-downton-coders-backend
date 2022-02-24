@@ -7,10 +7,14 @@ import cors from "cors";
 import logger from "morgan";
 import connectDB from "./db/connection.js";
 
-import usersRouter from "./routes/usersRouter.js";
+
 
 import eventsRouter from "./routes/eventsRouter.js";
-connectDB();
+
+import usersRouter  from './routes/usersRouter.js';
+import commentRouter from "./routes/commentRouter.js";
+connectDB()
+
 
 const app = express();
 
@@ -21,9 +25,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/users", usersRouter);
+
 
 app.use("/events", eventsRouter);
+
+
+app.use('/users', usersRouter);
+app.use('/comments', commentRouter);
 
 app.use(function (req, res, next) {
   res

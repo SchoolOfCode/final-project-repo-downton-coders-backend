@@ -1,11 +1,16 @@
-router.post("/comments", async function (req, res, next) {
-    const author_id = await req.body.author_id;
-    const body = await req.body.body;
-    const newComment = await comment.create({
-      "author_id": author_id,
-      "body": body,
+import express from "express";
+import {getComments, getCommentsByUserId, getCommentsByEventId, createComment, updateComment} from "../controller/commentsController.js";
+
+
+const router = express.Router()
+
+router.get('/', getComments);
+router.get("/:id", getCommentsByUserId);
+router.get("/event/:id", getCommentsByEventId);
+router.post('/', createComment);
+router.patch("/", updateComment);
+
+export default router;
   
-    })
-  res.send({"newComment": newComment});
-  })
+
   
