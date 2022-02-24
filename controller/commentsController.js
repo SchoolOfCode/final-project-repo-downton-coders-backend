@@ -41,16 +41,23 @@ export const createComment = async (req, res) => {
       "text": body,
       "event_id": event_id,
     })
-    // res.send({"newComment": newComment});
+  
     res.status(201).json(newComment);
 };
 
 // UPDATE COMMENT 
 export const updateComment = async (req, res) => {
-    const commentId = String(req.body.comment_id);
+    const commentId = String(req.body._id);
     const commentText = req.body.text;
     const updatedComment = {"text": commentText};
     await comment.findByIdAndUpdate(commentId, updatedComment);
     const returnedUpdatedComment = await comment.findById(commentId);
-    res.send({"message":"message successfully updated", returnedUpdatedComment});
+    res.send({"message":"comment successfully updated", returnedUpdatedComment});
+}
+
+// DELETE COMMENT 
+export const deleteComment = async (req, res) => {
+    const commentId = String(req.body._id);
+    const deletedComment = await comment.findById(commentId);
+    res.send({"Message": "Comment successfully deleted.", deletedComment});
 }
