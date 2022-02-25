@@ -13,6 +13,7 @@ const eventSchema = new mongoose.Schema({
   image: String,
   categories: [String],
   price: Number,
+
   external_event: String,
   attendance_id: [String],
   createdAt: {
@@ -20,6 +21,7 @@ const eventSchema = new mongoose.Schema({
     default: () => Date.now(),
     immutable: true,
   },
+
 });
 
 const event = mongoose.model("Event", eventSchema);

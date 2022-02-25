@@ -112,6 +112,36 @@ export const getUser = asyncHandler(async(req, res) =>{
   
 })
 
+export const updateUser = asyncHandler(async(req,res) => {
+ const User = await user.findById({_id:req.params.id})
+ User.username = req.body.username,
+ User.email = req.body.email,
+ User.age = req.body.age
+ const updatedUser = await User.save()
+ res.json(updatedUser)
+  
+
+})
+
+export const deleteUser = asyncHandler(async(req, res) => {
+  const User = await user.findById(req.params.id)
+  if(id === User.id){
+    res.status(200).json({
+      id: _id,
+      name: User.name,
+      surname: User.surname,
+      username:User.username,
+      email: User.email
+
+    })
+  }else {
+    res.status(403)
+    throw new Error('Invalid Request')
+  }
+  const deletedUser = await User.remove()
+  res.json(deletedUser)
+})
+
 //generate jwt token
 const generateToken = (id) => {
   return jwt.sign({id}, process.env.JWT_SECRET_TOKEN, {expiresIn: '30d'})
