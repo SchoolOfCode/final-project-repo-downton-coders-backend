@@ -115,6 +115,16 @@ export const getUser = asyncHandler(async(req, res) =>{
   
 })
 
+export const logoutUser = asyncHandler(async(req, res) => {
+  res.cookie('token', 'none', {
+    httpOnly: true,
+  })
+  res.status(200).json({
+    success: true,
+    data: {}
+  })
+})
+
 export const updateUser = asyncHandler(async(req,res) => {
  const User = await user.findById({_id:req.params.id})
  User.username = req.body.username,
@@ -146,7 +156,8 @@ export const deleteUser = asyncHandler(async(req, res) => {
 })
 
 //generate jwt token
-const maxAge = 4*60*60*24
+//const maxAge = 2*60*60*24
+const maxAge = 2 * 24 * 60 * 60
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, {expiresIn: maxAge})
 }
