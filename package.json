@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node -r dotenv/config.js ./bin/www.js",
+    "start": "node ./bin/www.js",
     "dev": "nodemon -r dotenv/config.js ./bin/www.js"
   },
   "dependencies": {
