@@ -2,7 +2,6 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import user  from '../models/usersModel.js'
-import { token } from 'morgan'
 
 
  export const getAllUsers = asyncHandler( async (req, res) =>{
