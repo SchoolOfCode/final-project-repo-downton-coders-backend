@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 import path from "path";
 
 import __dirname from "./dirname.js";
@@ -16,7 +16,7 @@ import commentRouter from "./routes/commentRouter.js";
 connectDB();
 
 const app = express();
-
+//middlewares
 app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
@@ -28,7 +28,14 @@ app.use("/events", eventsRouter);
 app.use("/users", usersRouter);
 app.use("/comments", commentRouter);
 
-app.use(errorHandler);
+
+
+app.use('/users', usersRouter);
+app.use('/comments', commentRouter);
+
+app.use(errorHandler)
+
+
 app.use(function (req, res, next) {
   res
     .status(404)
