@@ -1,28 +1,19 @@
 import express, { json } from "express";
 import path from "path";
 
-
-import __dirname  from './dirname.js';
-import cookieParser  from 'cookie-parser';
-import cors  from 'cors';
-import logger  from 'morgan';
-import connectDB from './db/connection.js';
-import dotenv from 'dotenv'
-dotenv.config()
-import errorHandler from './middlewares/errorHandler.js';
-
-
-
-
-
+import __dirname from "./dirname.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import logger from "morgan";
+import connectDB from "./db/connection.js";
+import dotenv from "dotenv";
+dotenv.config();
+import errorHandler from "./middlewares/errorHandler.js";
 
 import eventsRouter from "./routes/eventsRouter.js";
-
-
-import usersRouter  from './routes/usersRouter.js';
+import usersRouter from "./routes/usersRouter.js";
 import commentRouter from "./routes/commentRouter.js";
-connectDB()
-
+connectDB();
 
 const app = express();
 //middlewares
@@ -33,15 +24,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-
-
 app.use("/events", eventsRouter);
+app.use("/users", usersRouter);
+app.use("/comments", commentRouter);
+
 
 
 app.use('/users', usersRouter);
 app.use('/comments', commentRouter);
 
 app.use(errorHandler)
+
 
 app.use(function (req, res, next) {
   res
