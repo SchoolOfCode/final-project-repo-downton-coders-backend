@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import asyncHandler from 'express-async-handler'
 import user  from '../models/usersModel.js'
+import { token } from 'morgan'
 
 
  export const getAllUsers = asyncHandler( async (req, res) =>{
@@ -61,6 +62,7 @@ export const registerUser  = (async(req, res) => {
     hobbies,
   })
   if(User){
+    res.cookie('jwt', token, {httpOnly : true, maxAge: maxAge * 1000})
     res.status(201).json({
       _id: User.id,
       name: User.name,
@@ -69,6 +71,7 @@ export const registerUser  = (async(req, res) => {
       email: User.email,
       password: hashedPassword,
       token: generateToken(User._id)
+      
     })
   }else{
     res.status(400)
@@ -135,7 +138,7 @@ export const deleteUser = asyncHandler(async(req, res) => {
 
     })
   }else {
-    res.status(403)
+    res.status(404)
     throw new Error('Invalid Request')
   }
   const deletedUser = await User.remove()
@@ -143,8 +146,9 @@ export const deleteUser = asyncHandler(async(req, res) => {
 })
 
 //generate jwt token
+const maxAge = 4*60*60*24
 const generateToken = (id) => {
-  return jwt.sign({id}, process.env.JWT_SECRET_TOKEN, {expiresIn: '30d'})
+  return jwt.sign({ id }, process.env.JWT_SECRET_TOKEN, {expiresIn: maxAge})
 }
 
 
