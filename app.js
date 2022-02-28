@@ -10,14 +10,28 @@ import dotenv from "dotenv";
 dotenv.config();
 import errorHandler from "./middlewares/errorHandler.js";
 
+
 import eventsRouter from "./routes/eventsRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 import commentRouter from "./routes/commentRouter.js";
-connectDB();
+
+const messages = [];
+connectDB()
 
 const app = express();
+import io from "./io.cjs";
+
+io.on('connection', socket => {
+  console.log("New users connected");
+  socket.emit('message', ({name, message}) => {
+    console.log("Connecting to chat - backend")
+    io.emit('message', {name, message});
+    messages.push({"name": name, "message": message});
+  });
+})
 //middlewares
-app.use(logger("dev"));
+app.use(logger('dev'));
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

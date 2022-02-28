@@ -19,7 +19,11 @@
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.2",
     "morgan": "~1.9.1",
+
+    "socket.io": "^4.4.1"
+
     "validator": "^13.7.0"
+
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

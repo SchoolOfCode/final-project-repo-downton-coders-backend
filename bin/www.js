@@ -8,6 +8,7 @@ import debugLib from "debug";
 import http from "http";
 
 import app from "../app.js";
+import io from "../io.cjs";
 
 const debug = debugLib("final-project-repo-downton-coders-backend:server");
 
@@ -29,6 +30,7 @@ const server = http.createServer(app);
  */
 
 server.listen(port);
+io.attach(server);
 server.on("error", onError);
 server.on("listening", onListening);
 
