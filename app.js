@@ -1,6 +1,5 @@
 import express from 'express';
 import path from 'path';
-
 import __dirname  from './dirname.js';
 import cookieParser  from 'cookie-parser';
 import cors  from 'cors';
@@ -9,9 +8,18 @@ import connectDB from './db/connection.js';
 
 import usersRouter  from './routes/usersRouter.js';
 import commentRouter from "./routes/commentRouter.js";
+const messages = [];
 connectDB()
 
 const app = express();
+import io from "./io.cjs";
+
+io.on('connection', socket => {
+  socket.emit('message', ({name, message}) => {
+    io.emit('message', {name, message});
+    messages.push({"name": name, "message": message});
+  });
+})
 
 app.use(logger('dev'));
 app.use(cors());
