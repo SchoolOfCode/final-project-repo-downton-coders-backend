@@ -16,6 +16,13 @@ const eventSchema = new mongoose.Schema({
 
   external_event: String,
   attendance_id: [String],
+  
+
+  createdBy: {
+    type: mongoose.Types.ObjectId,
+    ref: 'user',
+    required: [true, 'Please provide a user']
+  },
   createdAt: {
     type: Date,
     default: () => Date.now(),

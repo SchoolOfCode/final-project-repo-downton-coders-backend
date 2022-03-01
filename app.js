@@ -36,11 +36,11 @@ app.use('/comments', commentRouter);
 app.use(errorHandler)
 
 
-app.use(function (req, res, next) {
-  res
-    .status(404)
-    .json({ message: "We couldn't find what you were looking for 😞" });
-});
+// app.use(function (req, res, next) {
+//   res
+//     .status(404)
+//     .json({ message: "We couldn't find what you were looking for 😞" });
+// });
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);
