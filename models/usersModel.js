@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import isEmail from 'validator/lib/isEmail.js'
 
 const userSchema = new mongoose.Schema({
@@ -26,12 +28,31 @@ const userSchema = new mongoose.Schema({
     },
     hobbies: [String],
 
+    isAdmin: {
+        type: Boolean,
+        required: true,
+        default: false,
+      }
+
     
     
 }, {
     timestamps: true,
 })
+userSchema.pre('save', async function(next) {
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
+    next()
+})
+// userSchema.methods.createJWT = function() {
+//     return jwt.sign({UserId:this._id, username: this.username}, process.env.JWT_SECRET_TOKEN, {expiresIn: process.env.JWT_LIFETIME})
 
+// }
+userSchema.methods.comparePassword = async function (userPassword) {
+    const isMatch = await bcrypt.compare(userPassword, this.password)
+    return isMatch
+
+}
 
 const user = mongoose.model("User", userSchema);
 

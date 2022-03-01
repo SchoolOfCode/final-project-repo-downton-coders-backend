@@ -1,29 +1,33 @@
 import event from "../models/events.js";
+import asyncHandler from 'express-async-handler'
 
 //GET All Events
 
-export const getEvents = async (req, res) => {
-  const Event = await event.find();
+export const getEvents = asyncHandler(async (req, res) => {
+  const Event = await event.find({User: req.User._id});
   res.status(200).json(Event);
-};
+})
 
 //POST a New Event
 
 export const createEvent = async (req, res) => {
-  const author_name = await req.body.author_name;
-  const author_id = await req.body.author_id;
-  const title = await req.body.title;
-  const location = await req.body.location;
-  const star_rating = await req.body.star_rating;
-  const date = await req.body.date;
-  const start_time = await req.body.start_time;
-  const end_time = await req.body.end_time;
-  const description = await req.body.description;
-  const image = await req.body.image;
-  const categories = await req.body.categories;
-  const price = await req.body.price;
-  const external_event = await req.body.external_event;
-  const attendance_id = await req.body.attendance_id;
+  const {author_name, author_id, title, location, star_rating,date,start_time, end_time, description, image,categories, price, external_event, attendance_id} = req.body
+  // const author_name = await req.body.author_name;
+  // const author_id = await req.body.author_id;
+  // const title = await req.body.title;
+  // const location = await req.body.location;
+  // const star_rating = await req.body.star_rating;
+  // const date = await req.body.date;
+  // const start_time = await req.body.start_time;
+  // const end_time = await req.body.end_time;
+  // const description = await req.body.description;
+  // const image = await req.body.image;
+  // const categories = await req.body.categories;
+  // const price = await req.body.price;
+  // const external_event = await req.body.external_event;
+  // const attendance_id = await req.body.attendance_id;
+  if(!author_name || !author_id || !title || !location || !star_rating
+    || !date || !start_time)
   const newEvent = await event.create({
     author_name: author_name,
     author_id: author_id,

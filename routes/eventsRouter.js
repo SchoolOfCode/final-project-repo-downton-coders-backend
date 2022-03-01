@@ -1,4 +1,5 @@
 import express from "express";
+import protect from "../middlewares/authmiddleware.js";
 import {
   getEvents,
   createEvent,
@@ -13,7 +14,7 @@ import {
 
 const router = express.Router();
 router.get("/", getEvents);
-router.post("/", createEvent);
+router.post("/",protect, createEvent);
 //Example: http://localhost:3000/events/621652d4fdeecf65b33a5338
 router.delete("/:event_id", deleteEventById);
 router.get("/:event_id", getEventById);
