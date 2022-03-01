@@ -47,6 +47,28 @@ export const createEvent = async (req, res) => {
   return res.status(200).json(newEvent);
 };
 
+//GET Events by search location
+
+export const getEventsBySearchLocation = async (req, res) => {
+  const location = await req.body.location;
+  const getEvent = await event.find({
+  location: { $regex: location, $options: "i" },
+  });
+  
+  return res.status(200).json(getEvent);
+  };
+  
+  //GET Events by search category
+  
+  export const getEventsBySearchCategory = async (req, res) => {
+  const category = await req.body.category;
+  const getEvent = await event.find({
+  categories: { $regex: category, $options: "i" },
+  });
+  
+  return res.status(200).json(getEvent);
+  };
+
 //DELETE Event with event_id
 
 export const deleteEventById = async (req, res) => {
