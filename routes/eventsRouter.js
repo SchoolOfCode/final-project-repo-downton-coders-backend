@@ -5,6 +5,8 @@ import {
   deleteEventById,
   getEventById,
   updateEventById,
+  getEventsBySearchLocation,
+  getEventsBySearchCategory,
   joinEventById,
   quitEventById,
   getHostEvent,
@@ -14,10 +16,13 @@ import {
 const router = express.Router();
 router.get("/", getEvents);
 router.post("/", createEvent);
+router.get("/searchlocation", getEventsBySearchLocation);
+router.get("/searchcategory", getEventsBySearchCategory);
 //Example: http://localhost:3000/events/621652d4fdeecf65b33a5338
 router.delete("/:event_id", deleteEventById);
 router.get("/:event_id", getEventById);
 router.patch("/:event_id", updateEventById);
+
 //Example: http://localhost:3000/events/join/621652d4fdeecf65b33a5338
 router.patch("/join/:event_id", joinEventById);
 router.patch("/quit/:event_id", quitEventById);
