@@ -3,10 +3,10 @@ import asyncHandler from 'express-async-handler'
 
 //GET All Events
 
-export const getEvents = asyncHandler(async (req, res) => {
-  const Event = await event.find({User: req.User._id});
+export const getEvents = async (req, res) => {
+  const Event = await event.find();
   res.status(200).json(Event);
-})
+}
 
 //POST a New Event
 
