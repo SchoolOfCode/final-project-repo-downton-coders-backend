@@ -26,8 +26,8 @@ export const createEvent = async (req, res) => {
   // const price = await req.body.price;
   // const external_event = await req.body.external_event;
   // const attendance_id = await req.body.attendance_id;
-  if(!author_name || !author_id || !title || !location || !star_rating
-    || !date || !start_time)
+  // if(!author_name || !author_id || !title || !location || !star_rating
+  //   || !date || !start_time)
   const newEvent = await event.create({
     author_name: author_name,
     author_id: author_id,
