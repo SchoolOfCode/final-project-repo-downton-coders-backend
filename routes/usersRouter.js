@@ -1,6 +1,6 @@
 import express from "express";
 import protect from "../middlewares/authmiddleware.js";
-import {registerUser, loginUser, updateUserProfile,deleteUser } from '../controller/userController.js';
+import {registerUser, loginUser, updateUserProfile } from '../controller/userController.js';
 
 const router = express.Router()
 // router.get('/userProfile', protect, getUser)
@@ -8,7 +8,7 @@ const router = express.Router()
 router.post('/', registerUser)
 router.post('/login', loginUser)
 router.post('/profile', protect, updateUserProfile)
-router.get('/:id', deleteUser)
+
 //router.post('/me', protect, updateUserPassword)
     
 
