@@ -8,7 +8,7 @@ import debugLib from "debug";
 import http from "http";
 
 import app from "../app.js";
-import io from "../io.cjs";
+import { Server } from "socket.io";
 
 const debug = debugLib("final-project-repo-downton-coders-backend:server");
 
@@ -26,11 +26,36 @@ app.set("port", port);
 const server = http.createServer(app);
 
 /**
+ * Initialise Socket.io attached to the HTTP server
+ */
+
+const io = new Server(server, {
+  cors: {
+    origin: false
+  }
+});
+
+/**
+ * Open socket 
+ */
+
+io.on('connection', socket => {
+  console.log("New users connected");
+  socket.emit('message', ({ name, message }) => {
+    console.log("Connecting to chat - backend")
+    io.emit('message', { name, message });
+    messages.push({ "name": name, "message": message });
+  });
+})
+
+/**
  * Listen on provided port, on all network interfaces.
  */
 
+
 server.listen(port);
-io.attach(server);
+
+
 server.on("error", onError);
 server.on("listening", onListening);
 
@@ -89,3 +114,4 @@ function onListening() {
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
 }
+
