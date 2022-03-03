@@ -19,16 +19,9 @@ const messages = [];
 connectDB()
 
 const app = express();
-import io from "./io.cjs";
+// import io from "./bin/www.js";
 
-io.on('connection', socket => {
-  console.log("New users connected");
-  socket.emit('message', ({name, message}) => {
-    console.log("Connecting to chat - backend")
-    io.emit('message', {name, message});
-    messages.push({"name": name, "message": message});
-  });
-})
+
 //middlewares
 app.use(logger('dev'));
 
