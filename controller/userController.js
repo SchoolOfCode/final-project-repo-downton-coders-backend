@@ -1,21 +1,28 @@
+import asyncHandler from "express-async-handler";
+import user from "../models/usersModel.js";
+import generateToken from "../utilis/generateToken.js";
 
-import asyncHandler from 'express-async-handler'
-import user  from '../models/usersModel.js'
-import generateToken from '../utilis/generateToken.js'
+export const registerUser = asyncHandler(async (req, res) => {
+  const { name, surname, username, age, email, password, hobbies } = req.body;
 
-export const registerUser  = asyncHandler(async(req, res) => {
-  const {name, surname, username, age, email, password, hobbies} = req.body
-
-  if(!name || !surname || !username || !age || !email  || !password || !hobbies ){
-    res.status(400)
-    throw new Error('Please add all field')
+  if (
+    !name ||
+    !surname ||
+    !username ||
+    !age ||
+    !email ||
+    !password ||
+    !hobbies
+  ) {
+    res.status(400);
+    throw new Error("Please add all field");
   }
 
   //check if user exists
-  const userExists = await user.findOne({email})
-  if(userExists){
-    res.status(400)
-    throw new Error({message:'user already exist'})
+  const userExists = await user.findOne({ email });
+  if (userExists) {
+    res.status(400);
+    throw new Error({ message: "user already exist" });
   }
 
   const User = await user.create({
@@ -26,8 +33,8 @@ export const registerUser  = asyncHandler(async(req, res) => {
     email,
     password,
     hobbies,
-  })
-  if(User){
+  });
+  if (User) {
     res.status(201).json({
       _id: User.id,
       name: User.name,
@@ -36,46 +43,39 @@ export const registerUser  = asyncHandler(async(req, res) => {
       email: User.email,
       age: user.age,
       password: User.password,
-       token: generateToken(User._id)
-      
-    })
-  }else{
-    res.status(400)
-    throw new Error({message: 'Invalid User data'})
-}
-
-
-})
-export const loginUser = asyncHandler(async(req, res) => {
-  const {email, password} = req.body
+      token: generateToken(User._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error({ message: "Invalid User data" });
+  }
+});
+export const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
   //check user email
-  const User = await user.findOne({email})
+  const User = await user.findOne({ email });
 
-  if(User &&(await User.comparePassword(password))){
+  if (User && (await User.comparePassword(password))) {
     res.json({
       _id: User.id,
       name: User.name,
       surname: User.surname,
       username: User.username,
       email: User.email,
-      token: generateToken(User._id)
-      
-    
-    })
-  }else{
-    res.status(400)
-    throw new Error({message: 'Invalid User Credentials'})
+      token: generateToken(User._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error({ message: "Invalid User Credentials" });
   }
+});
 
-})
-
-
- export const updateUserProfile = asyncHandler(async (req, res) => {
+export const updateUserProfile = asyncHandler(async (req, res) => {
   const User = await user.findById(req.User._id);
 
   if (User) {
     User.name = req.body.name || User.name;
-    User.surname = req.body.surname || User.surname
+    User.surname = req.body.surname || User.surname;
     User.email = req.body.email || User.email;
     if (req.body.password) {
       User.password = req.body.password;
@@ -97,7 +97,6 @@ export const loginUser = asyncHandler(async(req, res) => {
   }
 });
 
-
 // export const updateUserPassword = asyncHandler(async (req, res) => {
 //   const { oldPassword, newPassword } = req.body;
 //   if (!oldPassword || !newPassword) {
@@ -114,7 +113,6 @@ export const loginUser = asyncHandler(async(req, res) => {
 //   await User.save();
 //   res.status(StatusCodes.OK).json({ msg: 'Success! Password Updated.' });
 // })
-
 
 // export const deleteUser = asyncHandler(async(req, res) => {
 //   const User = await user.findById(req.params.id)
@@ -136,7 +134,3 @@ export const loginUser = asyncHandler(async(req, res) => {
 // })
 
 //generate jwt token
-
-
-
-
