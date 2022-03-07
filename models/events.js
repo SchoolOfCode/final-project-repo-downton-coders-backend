@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema({
-  author_name: String,
-  author_id: String,
+
   title: String,
   location: String,
   star_rating: Number,
@@ -17,12 +16,12 @@ const eventSchema = new mongoose.Schema({
   external_event: String,
   attendance_id: [String],
   
-
-  createdBy: {
-    type: mongoose.Types.ObjectId,
-    ref: 'user',
-    required: [true, 'Please provide a user']
-  },
+ User: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "user",
+    },
+  
   createdAt: {
     type: Date,
     default: () => Date.now(),
