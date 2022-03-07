@@ -52,15 +52,15 @@ export const getEvents = asyncHandler(async (req, res) => {
 //@route           POST /api/events/create
 //@access          Private
  export const createEvent = asyncHandler(async (req, res) => {
-  const { title, location,date,start_time, end_time, description, image,categories, price, external_event} = req.body;
+  const { title, location,date,start_time, end_time, description,author_username, image,categories, price, external_event} = req.body;
 
   if (!title || !location || !date
-  || !start_time || !end_time || !description || !image || !categories || !price || !external_event) {
+  || !start_time || !end_time || !description || !author_username || !image || !categories || !price || !external_event) {
     res.status(400);
     throw new Error("Please Fill all the feilds");
     return;
   } else {
-    const Event = new event({ User: req.User._id, title, description, location, start_time, end_time, date, image, categories, price, external_event});
+    const Event = new event({ User: req.User._id, title, author_username, description, location, start_time, end_time, date, image, categories, price, external_event});
 
     const createdEvent = await Event.save();
 

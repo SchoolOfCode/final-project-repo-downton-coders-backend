@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema({
-
+  author_username: {
+    type: String,
+    required: true,
+  },
   title: String,
   location: String,
   star_rating: Number,
