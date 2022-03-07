@@ -70,14 +70,14 @@ export const createEvent = asyncHandler(async (req, res) => {
     !title ||
     !location ||
     !date ||
-    star_rating !== null ||
+    star_rating === null ||
     !start_time ||
     !end_time ||
     !description ||
     !author_username ||
     !image ||
     !categories ||
-    price !== null ||
+    price === null ||
     !external_event
   ) {
     res.status(400);
