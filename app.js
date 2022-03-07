@@ -10,20 +10,33 @@ import dotenv from "dotenv";
 dotenv.config();
 import errorHandler from "./middlewares/errorHandler.js";
 
-
 import eventsRouter from "./routes/eventsRouter.js";
 import usersRouter from "./routes/usersRouter.js";
 import commentRouter from "./routes/commentRouter.js";
 
 const messages = [];
-connectDB()
+connectDB();
 
 const app = express();
 // import io from "./bin/www.js";
 
+//---------middlewares---------------//
 
-//middlewares
-app.use(logger('dev'));
+// Enable CORS
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
+app.use(logger("dev"));
 
 app.use(cors());
 app.use(express.json());
@@ -35,13 +48,10 @@ app.use("/events", eventsRouter);
 app.use("/users", usersRouter);
 app.use("/comments", commentRouter);
 
+app.use("/users", usersRouter);
+app.use("/comments", commentRouter);
 
-
-app.use('/users', usersRouter);
-app.use('/comments', commentRouter);
-
-app.use(errorHandler)
-
+app.use(errorHandler);
 
 // app.use(function (req, res, next) {
 //   res
@@ -53,5 +63,7 @@ app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).json(err);
 });
+
+//-----------------------------------------//
 
 export default app;
