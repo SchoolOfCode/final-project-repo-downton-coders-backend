@@ -52,15 +52,15 @@ export const getEvents = asyncHandler(async (req, res) => {
 //@route           POST /api/events/create
 //@access          Private
  export const createEvent = asyncHandler(async (req, res) => {
-  const { title, location,date,start_time, end_time, description,author_username, image,categories, price, external_event} = req.body;
+  const { title, location,date, star_rating,start_time, end_time, description,author_username, image,categories, price, external_event} = req.body;
 
-  if (!title || !location || !date
+  if (!title || !location || !date || !star_rating
   || !start_time || !end_time || !description || !author_username || !image || !categories || !price || !external_event) {
     res.status(400);
     throw new Error("Please Fill all the feilds");
     return;
   } else {
-    const Event = new event({ User: req.User._id, title, author_username, description, location, start_time, end_time, date, image, categories, price, external_event});
+    const Event = new event({ User: req.User._id, title, author_username, description, location, star_rating, start_time, end_time, date, image, categories, price, external_event});
 
     const createdEvent = await Event.save();
 
@@ -146,7 +146,7 @@ export const deleteEvent = asyncHandler(async (req, res) => {
 // @route   PUT /api/events/:id
 // @access  Private
 export const updateEvent = asyncHandler(async (req, res) => {
-  const { title, location, categories, description, image, date, star_rating, start_time, end_time, price, external_event, attendance_id } = req.body;
+  const { title, location, categories, description, image, date, start_time, end_time, price, external_event, attendance_id } = req.body;
 
   const Event = await event.findById(req.params.id);
 
@@ -167,7 +167,7 @@ export const updateEvent = asyncHandler(async (req, res) => {
     Event.external_event = external_event;
     Event.attendance_id = attendance_id;
     Event.image = image;
-    Event.star_rating = star_rating;
+   
     
 
     const updatedEvent = await Event.save();
