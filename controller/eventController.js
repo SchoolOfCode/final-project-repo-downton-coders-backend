@@ -1,12 +1,12 @@
 import event from "../models/events.js";
-import asyncHandler from 'express-async-handler'
+import asyncHandler from "express-async-handler";
 
 //GET All Events
 
 export const getEvents = asyncHandler(async (req, res) => {
   const Event = await event.find();
   res.status(200).json(Event);
-})
+});
 
 //POST a New Event
 
@@ -47,20 +47,58 @@ export const getEvents = asyncHandler(async (req, res) => {
 //   return res.status(200).json(newEvent);
 // };
 
-
 //@description     Create single Event
 //@route           POST /api/events/create
 //@access          Private
- export const createEvent = asyncHandler(async (req, res) => {
-  const { title, location,date, star_rating,start_time, end_time, description,author_username, image,categories, price, external_event} = req.body;
+export const createEvent = asyncHandler(async (req, res) => {
+  const {
+    title,
+    location,
+    date,
+    star_rating,
+    start_time,
+    end_time,
+    description,
+    author_username,
+    image,
+    categories,
+    price,
+    external_event,
+  } = req.body;
 
-  if (!title || !location || !date || !star_rating
-  || !start_time || !end_time || !description || !author_username || !image || !categories || !price || !external_event) {
+  if (
+    !title ||
+    !location ||
+    !date ||
+    star_rating !== null ||
+    !start_time ||
+    !end_time ||
+    !description ||
+    !author_username ||
+    !image ||
+    !categories ||
+    price !== null ||
+    !external_event
+  ) {
     res.status(400);
     throw new Error("Please Fill all the feilds");
     return;
   } else {
-    const Event = new event({ User: req.User._id, title, author_username, description, location, star_rating, start_time, end_time, date, image, categories, price, external_event});
+    const Event = new event({
+      User: req.User._id,
+      title,
+      author_username,
+      description,
+      location,
+      star_rating,
+      start_time,
+      end_time,
+      date,
+      image,
+      categories,
+      price,
+      external_event,
+    });
 
     const createdEvent = await Event.save();
 
@@ -85,22 +123,22 @@ export const getEventById = asyncHandler(async (req, res) => {
 export const getEventsBySearchLocation = async (req, res) => {
   const location = await req.body.location;
   const getEvent = await event.find({
-  location: { $regex: location, $options: "i" },
+    location: { $regex: location, $options: "i" },
   });
-  
+
   return res.status(200).json(getEvent);
-  };
-  
-  //GET Events by search category
-  
-  export const getEventsBySearchCategory = async (req, res) => {
+};
+
+//GET Events by search category
+
+export const getEventsBySearchCategory = async (req, res) => {
   const category = await req.body.category;
   const getEvent = await event.find({
-  categories: { $regex: category, $options: "i" },
+    categories: { $regex: category, $options: "i" },
   });
-  
+
   return res.status(200).json(getEvent);
-  };
+};
 
 //DELETE Event with event_id
 //@description     Delete single Event
@@ -122,7 +160,6 @@ export const deleteEvent = asyncHandler(async (req, res) => {
     throw new Error("Event not Found");
   }
 });
-
 
 // export const deleteEventById = async (req, res) => {
 //   // const event_id = await req.body.event_id;
@@ -146,7 +183,19 @@ export const deleteEvent = asyncHandler(async (req, res) => {
 // @route   PUT /api/events/:id
 // @access  Private
 export const updateEvent = asyncHandler(async (req, res) => {
-  const { title, location, categories, description, image, date, start_time, end_time, price, external_event, attendance_id } = req.body;
+  const {
+    title,
+    location,
+    categories,
+    description,
+    image,
+    date,
+    start_time,
+    end_time,
+    price,
+    external_event,
+    attendance_id,
+  } = req.body;
 
   const Event = await event.findById(req.params.id);
 
@@ -167,8 +216,6 @@ export const updateEvent = asyncHandler(async (req, res) => {
     Event.external_event = external_event;
     Event.attendance_id = attendance_id;
     Event.image = image;
-   
-    
 
     const updatedEvent = await Event.save();
     res.json(updatedEvent);
