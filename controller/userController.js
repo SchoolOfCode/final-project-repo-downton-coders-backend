@@ -34,7 +34,7 @@ export const registerUser  = asyncHandler(async(req, res) => {
       surname: User.surname,
       username: User.username,
       email: User.email,
-      age: user.age,
+      age: User.age,
       password: User.password,
        token: generateToken(User._id)
       
@@ -58,6 +58,7 @@ export const loginUser = asyncHandler(async(req, res) => {
       surname: User.surname,
       username: User.username,
       email: User.email,
+      age: User.age,
       token: generateToken(User._id)
       
     
