@@ -297,7 +297,7 @@ export const quitEventById = async (req, res) => {
 
 export const getHostEvent = async (req, res) => {
   const user_id = await req.params.user_id;
-  const getEvent = await event.find({ author_id: user_id });
+  const getEvent = await event.find({ User: user_id });
   return res.status(200).json(getEvent);
 };
 

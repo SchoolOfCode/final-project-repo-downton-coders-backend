@@ -5,6 +5,11 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  User: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "user",
+  },
   title: String,
   location: String,
   star_rating: Number,
@@ -18,19 +23,12 @@ const eventSchema = new mongoose.Schema({
 
   external_event: String,
   attendance_id: [String],
-  
- User: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "user",
-    },
-  
+
   createdAt: {
     type: Date,
     default: () => Date.now(),
     immutable: true,
   },
-
 });
 
 const event = mongoose.model("Event", eventSchema);
