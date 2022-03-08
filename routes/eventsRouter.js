@@ -18,8 +18,8 @@ const router = express.Router();
 
 router.get("/", getEvents);
 router.post("/", protect, createEvent);
-router.get("/searchlocation", getEventsBySearchLocation);
-router.get("/searchcategory", getEventsBySearchCategory);
+router.post("/searchlocation", getEventsBySearchLocation);
+router.post("/searchcategory", getEventsBySearchCategory);
 //Example: http://localhost:3000/events/621652d4fdeecf65b33a5338
 router.delete("/:id", protect, deleteEvent);
 router.get("/:event_id", getEventById);
