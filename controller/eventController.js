@@ -107,7 +107,7 @@ export const createEvent = asyncHandler(async (req, res) => {
 });
 
 export const getEventById = asyncHandler(async (req, res) => {
-  const Event = await event.findById(req.params.id);
+  const Event = await event.find({ _id: req.params.id });
 
   if (Event) {
     res.json(Event);

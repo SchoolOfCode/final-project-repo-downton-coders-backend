@@ -22,7 +22,7 @@ router.post("/searchlocation", getEventsBySearchLocation);
 router.post("/searchcategory", getEventsBySearchCategory);
 //Example: http://localhost:3000/events/621652d4fdeecf65b33a5338
 router.delete("/:id", protect, deleteEvent);
-router.get("/:event_id", getEventById);
+router.get("/:id", getEventById);
 router.patch("/:id", protect, updateEvent);
 //Example: http://localhost:3000/events/join/621652d4fdeecf65b33a5338
 router.patch("/join/:event_id", joinEventById);
