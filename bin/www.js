@@ -29,7 +29,11 @@ const server = http.createServer(app);
  * Initialise Socket.io attached to the HTTP server
  */
 
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    "origin": "*"
+  }
+});
 
 /**
  * Open socket 
@@ -41,6 +45,9 @@ io.on('connection', socket => {
     console.log("Connecting to chat - backend")
     io.emit('message', { name, message });
     messages.push({ "name": name, "message": message });
+  });
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
   });
 })
 
