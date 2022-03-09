@@ -29,11 +29,7 @@ const server = http.createServer(app);
  * Initialise Socket.io attached to the HTTP server
  */
 
-const io = new Server(server, {
-  cors: {
-    origin: false
-  }
-});
+const io = new Server(server);
 
 /**
  * Open socket 
