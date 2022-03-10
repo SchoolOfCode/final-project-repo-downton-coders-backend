@@ -38,17 +38,13 @@ const io = new Server(server, {
 /**
  * Open socket 
  */
+const messages = [];
 
-io.on('connection', socket => {
-  console.log("New users connected");
-  socket.emit('message', ({ name, message }) => {
-    console.log("Connecting to chat - backend")
-    io.emit('message', { name, message });
-    messages.push({ "name": name, "message": message });
-  });
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
+ io.on('connection', socket => {
+  socket.on('message', ({ name, message }) => {
+    io.emit('message', { name, message })
+    messages.push({"name": name,"message": message});
+  })
 })
 
 /**
